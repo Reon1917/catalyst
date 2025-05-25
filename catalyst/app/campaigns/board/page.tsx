@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import DragDropBoard from '@/components/ui/drag-drop-board';
 import AdvancedSearch from '@/components/ui/advanced-search';
+import { Campaign } from '@/lib/mock-data';
 import {
   ViewColumnsIcon,
   Squares2X2Icon,
@@ -20,6 +21,7 @@ interface SearchFilters {
 
 export default function CampaignBoardPage() {
   const [viewMode, setViewMode] = useState<'board' | 'grid'>('board');
+  
   const handleSearch = (query: string, filters: SearchFilters) => {
     if (process.env.NODE_ENV === 'development') {
       console.log('Search:', query, 'Filters:', filters);
@@ -31,7 +33,8 @@ export default function CampaignBoardPage() {
     // Here you would typically update your backend/state management
   };
 
-  const handleCampaignUpdate = (campaign: Record<string, unknown>) => {
+  // Fix the type annotation to match what DragDropBoard expects
+  const handleCampaignUpdate = (campaign: Campaign) => {
     console.log('Updated campaign:', campaign);
     // Here you would typically update your backend/state management
   };
@@ -140,4 +143,4 @@ export default function CampaignBoardPage() {
       </div>
     </div>
   );
-} 
+}
