@@ -187,7 +187,6 @@ export default function DashboardPage() {
   const activeCampaigns = campaigns.filter(c => c.status === 'active').length;
   const totalBudget = campaigns.reduce((sum, c) => sum + c.budget, 0);
   const totalImpressions = campaigns.reduce((sum, c) => sum + c.metrics.impressions, 0);
-  const totalRevenue = campaigns.reduce((sum, c) => sum + c.metrics.revenue, 0);
 
   // Loading state
   if (isLoading) {

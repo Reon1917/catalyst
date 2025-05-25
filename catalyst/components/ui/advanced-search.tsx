@@ -5,12 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   MagnifyingGlassIcon,
   FunnelIcon,
-  XMarkIcon,
-  CalendarIcon,
-  TagIcon,
-  CurrencyDollarIcon,
-  ChartBarIcon,
-  AdjustmentsHorizontalIcon
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 
 interface FilterOption {
@@ -68,12 +63,12 @@ export default function AdvancedSearch({ onSearch, placeholder = "Search campaig
   });
 
   // Debounced search
-  const debouncedSearch = useCallback(
-    debounce((searchQuery: string, searchFilters: SearchFilters) => {
+  const debouncedSearch = useCallback((searchQuery: string, searchFilters: SearchFilters) => {
+    const debouncedFn = debounce(() => {
       onSearch(searchQuery, searchFilters);
-    }, 300),
-    [onSearch]
-  );
+    }, 300);
+    debouncedFn();
+  }, [onSearch]);
 
   useEffect(() => {
     debouncedSearch(query, filters);
@@ -89,7 +84,7 @@ export default function AdvancedSearch({ onSearch, placeholder = "Search campaig
     );
   }, [filters]);
 
-  const handleFilterChange = (filterType: keyof SearchFilters, value: any) => {
+  const handleFilterChange = (filterType: keyof SearchFilters, value: SearchFilters[keyof SearchFilters]) => {
     setFilters(prev => ({
       ...prev,
       [filterType]: value
@@ -370,7 +365,7 @@ function FilterTag({ label, onRemove }: { label: string; onRemove: () => void })
 }
 
 // Debounce utility
-function debounce<T extends (...args: any[]) => any>(
+function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {

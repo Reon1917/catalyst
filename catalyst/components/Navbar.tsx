@@ -4,6 +4,7 @@
  */
 
 import Link from 'next/link';
+import Image from 'next/image';
 import ThemeSwitcher from './ThemeSwitcher';
 
 export default function Navbar() {
@@ -17,9 +18,11 @@ export default function Navbar() {
               href="/" 
               className="flex items-center space-x-3 hover:opacity-80 transition-all duration-300 hover:scale-105"
             >
-              <img 
+              <Image 
                 src="/branding/logo-only.png" 
                 alt="Catalyst Logo" 
+                width={32}
+                height={32}
                 className="h-8 w-8"
               />
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent">

@@ -6,8 +6,6 @@ import {
   RectangleGroupIcon,
   MagnifyingGlassIcon,
   DocumentCheckIcon,
-  CursorArrowRaysIcon,
-  PresentationChartLineIcon,
   SparklesIcon
 } from '@heroicons/react/24/outline';
 

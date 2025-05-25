@@ -85,7 +85,7 @@ export function ShowcaseSection() {
             Experience the Features
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Don't just read about it - interact with our sophisticated features designed for modern marketing teams.
+            Don&apos;t just read about it - interact with our sophisticated features designed for modern marketing teams.
           </p>
         </div>
 

@@ -2,6 +2,7 @@
 
 import { ArrowRightIcon, CommandLineIcon, ChartBarIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function HeroSection() {
   return (
@@ -12,9 +13,11 @@ export function HeroSection() {
       <div className="max-w-6xl mx-auto text-center animate-fade-in relative z-10">
         {/* Logo */}
         <div className="mb-8 animate-scale-in">
-          <img 
+          <Image 
             src="/branding/logo-only.png" 
             alt="Catalyst Logo" 
+            width={80}
+            height={80}
             className="h-20 w-20 mx-auto mb-4 drop-shadow-lg"
           />
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
 export function CTASection() {
@@ -8,9 +9,11 @@ export function CTASection() {
     <section className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto text-center animate-fade-in">
         <div className="mb-8">
-          <img 
+          <Image 
             src="/branding/logo-only.png" 
             alt="Catalyst Logo" 
+            width={64}
+            height={64}
             className="h-16 w-16 mx-auto mb-6 opacity-80"
           />
         </div>

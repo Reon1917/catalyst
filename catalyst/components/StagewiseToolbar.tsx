@@ -13,11 +13,7 @@ const StagewiseToolbar = () => {
     if (process.env.NODE_ENV === 'development') {
       const initStagewise = async () => {
         try {
-          const { StagewiseToolbar } = await import('@stagewise/toolbar-next');
-          
-          const stagewiseConfig = {
-            plugins: []
-          };
+          await import('@stagewise/toolbar-next');
           
           // Initialize the toolbar
           if (typeof window !== 'undefined') {
