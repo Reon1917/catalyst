@@ -247,6 +247,73 @@
     background-color: rgb(148 163 184 / 0.5);
   }
   
+  /* Enhanced card styling */
+  .card-enhanced {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border-radius: 16px;
+    border: 1px solid hsl(var(--border));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
+  
+  .card-enhanced:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Utility classes for common colors */
+  .text-success {
+    color: rgb(34 197 94);
+  }
+  
+  .text-info {
+    color: rgb(59 130 246);
+  }
+  
+  .text-warning {
+    color: rgb(245 158 11);
+  }
+  
+  .bg-success\/10 {
+    background-color: rgb(34 197 94 / 0.1);
+  }
+  
+  .bg-primary\/10 {
+    background-color: hsl(var(--primary) / 0.1);
+  }
+  
+  .bg-info\/10 {
+    background-color: rgb(59 130 246 / 0.1);
+  }
+  
+  .bg-warning\/10 {
+    background-color: rgb(245 158 11 / 0.1);
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
   /* Smooth transitions for theme switching */
   * {
     transition-property: background-color, border-color, color, fill, stroke;
