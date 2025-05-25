@@ -19,9 +19,35 @@ export const metadata: Metadata = {
   title: "Catalyst - Marketing Campaign Planner",
   description: "Plan, manage, and optimize your marketing campaigns with data-driven insights",
   icons: {
-    icon: "/branding/logo-only.png",
-    shortcut: "/branding/logo-only.png",
-    apple: "/branding/logo-only.png",
+    icon: [
+      {
+        url: "/favicon.ico",
+        type: "image/x-icon",
+      },
+      {
+        url: "/branding/logo-only.png",
+        type: "image/png",
+        sizes: "32x32",
+      },
+      {
+        url: "/branding/logo-only.png",
+        type: "image/png",
+        sizes: "16x16",
+      }
+    ],
+    shortcut: [
+      {
+        url: "/branding/logo-only.png",
+        type: "image/png",
+      }
+    ],
+    apple: [
+      {
+        url: "/branding/logo-only.png",
+        type: "image/png",
+        sizes: "180x180",
+      }
+    ],
   },
 };
 
