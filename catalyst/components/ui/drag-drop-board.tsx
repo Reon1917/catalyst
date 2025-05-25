@@ -128,7 +128,7 @@ export default function DragDropBoard({
           if (column.id === targetColumnId) {
             return {
               ...column,
-              campaigns: [...column.campaigns, { ...draggedCampaign, status: targetColumnId as any }]
+              campaigns: [...column.campaigns, { ...draggedCampaign, status: targetColumnId as Campaign['status'] }]
             };
           }
           return column;
@@ -182,7 +182,6 @@ export default function DragDropBoard({
                     onDragStart={() => handleDragStart(campaign)}
                     onDragEnd={handleDragEnd}
                     isDragging={draggedCampaign?.id === campaign.id}
-                    onUpdate={onCampaignUpdate}
                   />
                 ))}
               </AnimatePresence>
@@ -216,7 +215,7 @@ interface CampaignCardProps {
   onUpdate: (campaign: Campaign) => void;
 }
 
-function CampaignCard({ campaign, onDragStart, onDragEnd, isDragging, onUpdate }: CampaignCardProps) {
+function CampaignCard({ campaign, onDragStart, onDragEnd, isDragging }: Omit<CampaignCardProps, 'onUpdate'>) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const getStatusColor = (status: string) => {

@@ -1,13 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   CalendarIcon,
   CurrencyDollarIcon,
   ExclamationTriangleIcon,
-  CheckCircleIcon,
-  XMarkIcon
+  CheckCircleIcon
 } from '@heroicons/react/24/outline';
 import { getChannels, getTags, getTeamMembers } from '@/lib/mock-data';
 
@@ -60,7 +59,7 @@ export default function EnhancedForm({ onSubmit, initialData, isLoading = false 
   const teamMembers = getTeamMembers();
 
   // Validation rules
-  const validateField = (name: string, value: string | string[]): string | undefined => {
+  const validateField = useCallback((name: string, value: string | string[]): string | undefined => {
     switch (name) {
       case 'title':
         if (!value || (typeof value === 'string' && value.trim().length < 3)) {
@@ -121,10 +120,10 @@ export default function EnhancedForm({ onSubmit, initialData, isLoading = false 
         break;
     }
     return undefined;
-  };
+  }, []);
 
   // Date range validation
-  const validateDateRange = (): string | undefined => {
+  const validateDateRange = useCallback((): string | undefined => {
     if (formData.startDate && formData.endDate) {
       const start = new Date(formData.startDate);
       const end = new Date(formData.endDate);
@@ -145,10 +144,10 @@ export default function EnhancedForm({ onSubmit, initialData, isLoading = false 
       }
     }
     return undefined;
-  };
+  }, [formData.startDate, formData.endDate]);
 
   // Validate all fields
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors: FormErrors = {};
     
     Object.keys(formData).forEach(key => {
@@ -166,11 +165,11 @@ export default function EnhancedForm({ onSubmit, initialData, isLoading = false 
     setErrors(newErrors);
     setIsValid(Object.keys(newErrors).length === 0);
     return Object.keys(newErrors).length === 0;
-  };
+  }, [formData, validateField, validateDateRange]);
 
   useEffect(() => {
     validateForm();
-  }, [formData]);
+  }, [validateForm]);
 
   const handleInputChange = (name: string, value: string | string[]) => {
     setFormData(prev => ({ ...prev, [name]: value }));

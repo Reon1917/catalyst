@@ -2,14 +2,12 @@
 
 interface StatCardProps {
   icon: React.ComponentType<{ className?: string }>;
-  title: string;
   value: string | number;
   description: string;
 }
 
 export function StatCard({ 
   icon: Icon, 
-  title, 
   value, 
   description
 }: StatCardProps) {

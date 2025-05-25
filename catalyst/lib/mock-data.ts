@@ -140,10 +140,7 @@ function randomChoices<T>(array: T[], count: number): T[] {
   return shuffled.slice(0, count);
 }
 
-function randomDate(start: Date, end: Date): string {
-  const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  return date.toISOString().split('T')[0];
-}
+
 
 function generateMetrics(budget: number, status: string): Campaign['metrics'] {
   const baseImpressions = Math.floor(budget * (10 + Math.random() * 20)); // 10-30 impressions per dollar
