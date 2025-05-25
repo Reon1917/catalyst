@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import StagewiseToolbar from "@/components/StagewiseToolbar";
+import CommandPaletteProvider from "@/components/CommandPaletteProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,11 +36,13 @@ export default function RootLayout({
           fontFamily: 'Inter, sans-serif'
         }}
       >
-        <Navbar />
-        <main>
-          {children}
-        </main>
-        <StagewiseToolbar />
+        <CommandPaletteProvider>
+          <Navbar />
+          <main>
+            {children}
+          </main>
+          <StagewiseToolbar />
+        </CommandPaletteProvider>
       </body>
     </html>
   );

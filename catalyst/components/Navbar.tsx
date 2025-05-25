@@ -32,6 +32,18 @@ export default function Navbar() {
               Dashboard
             </Link>
             <Link 
+              href="/analytics" 
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-accent/60 hover:shadow-sm"
+            >
+              Analytics
+            </Link>
+            <Link 
+              href="/campaigns/board" 
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-accent/60 hover:shadow-sm"
+            >
+              Board
+            </Link>
+            <Link 
               href="/campaigns/new" 
               className="btn-primary text-sm font-medium px-5 py-2.5 hover:shadow-lg transition-all duration-200"
             >
