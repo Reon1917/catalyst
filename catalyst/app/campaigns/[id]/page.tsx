@@ -15,7 +15,7 @@ export default function CampaignDetailPage() {
   const params = useParams();
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [simulatedResults, setSimulatedResults] = useState<Campaign['simulatedResults']>(null);
+  const [simulatedResults, setSimulatedResults] = useState<Campaign['simulatedResults']>(undefined);
 
   useEffect(() => {
     const fetchCampaign = () => {
