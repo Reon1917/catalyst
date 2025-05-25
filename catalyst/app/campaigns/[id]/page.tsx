@@ -1,0 +1,24 @@
+/**
+ * Campaign Detail page - View specific campaign details
+ */
+
+interface CampaignDetailPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function CampaignDetailPage({ params }: CampaignDetailPageProps) {
+  return (
+    <div className="space-y-6">
+      <div className="border-b border-gray-200 pb-4">
+        <h1 className="text-3xl font-bold text-gray-900">Campaign Details</h1>
+        <p className="mt-2 text-gray-600">Campaign ID: {params.id}</p>
+      </div>
+      
+      <div className="bg-white rounded-lg shadow p-6">
+        <p className="text-gray-500">Campaign Detail Page - Campaign details and analytics will be implemented here</p>
+      </div>
+    </div>
+  );
+} 
