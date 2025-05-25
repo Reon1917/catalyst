@@ -95,6 +95,7 @@ export function saveCampaign(campaignData: CampaignInput): Campaign {
     savedCampaign = {
       ...campaignData,
       id: generateId(),
+      status: campaignData.status || 'draft', // Default to draft if no status provided
       createdAt: now,
       updatedAt: now
     } as Campaign;

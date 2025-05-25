@@ -2,13 +2,16 @@
 
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { useRouter } from 'next/navigation';
 import DragDropBoard from '@/components/ui/drag-drop-board';
 import AdvancedSearch from '@/components/ui/advanced-search';
-import { Campaign } from '@/lib/mock-data';
+import { useCampaigns } from '@/hooks/useCampaigns';
 import {
   ViewColumnsIcon,
   Squares2X2Icon,
-  PlusIcon
+  PlusIcon,
+  SparklesIcon,
+  InformationCircleIcon
 } from '@heroicons/react/24/outline';
 
 interface SearchFilters {
@@ -20,7 +23,12 @@ interface SearchFilters {
 }
 
 export default function CampaignBoardPage() {
+  const router = useRouter();
   const [viewMode, setViewMode] = useState<'board' | 'grid'>('board');
+  const { campaigns, isLoading, updateCampaignStatus, getUserCampaigns, getMockCampaigns } = useCampaigns({ type: 'hybrid', mockCount: 3 });
+  
+  const userCampaigns = getUserCampaigns();
+  const mockCampaigns = getMockCampaigns();
   
   const handleSearch = (query: string, filters: SearchFilters) => {
     if (process.env.NODE_ENV === 'development') {
@@ -29,14 +37,22 @@ export default function CampaignBoardPage() {
   };
 
   const handleCampaignMove = (campaignId: string, fromColumn: string, toColumn: string) => {
-    console.log(`Moved campaign ${campaignId} from ${fromColumn} to ${toColumn}`);
-    // Here you would typically update your backend/state management
+    // Map column names to status values
+    const statusMap: Record<string, 'draft' | 'active' | 'paused' | 'completed'> = {
+      'draft': 'draft',
+      'active': 'active', 
+      'paused': 'paused',
+      'completed': 'completed'
+    };
+    
+    const newStatus = statusMap[toColumn];
+    if (newStatus) {
+      updateCampaignStatus(campaignId, newStatus);
+    }
   };
 
-  // Fix the type annotation to match what DragDropBoard expects
-  const handleCampaignUpdate = (campaign: Campaign) => {
-    console.log('Updated campaign:', campaign);
-    // Here you would typically update your backend/state management
+  const handleNewCampaign = () => {
+    router.push('/campaigns/new');
   };
 
   return (
@@ -56,6 +72,24 @@ export default function CampaignBoardPage() {
               <p className="text-gray-600 dark:text-gray-400">
                 Manage your campaigns with drag-and-drop workflow
               </p>
+              
+              {/* Campaign Stats */}
+              <div className="flex items-center space-x-6 mt-3">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    {userCampaigns.length} Your Campaigns
+                  </span>
+                </div>
+                {mockCampaigns.length > 0 && (
+                  <div className="flex items-center space-x-2">
+                    <SparklesIcon className="w-4 h-4 text-purple-500" />
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      {mockCampaigns.length} Demo Campaigns
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="flex items-center space-x-3">
@@ -84,7 +118,10 @@ export default function CampaignBoardPage() {
               </div>
 
               {/* Actions */}
-              <button className="flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+              <button 
+                onClick={handleNewCampaign}
+                className="flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              >
                 <PlusIcon className="w-4 h-4 mr-2" />
                 New Campaign
               </button>
@@ -99,6 +136,29 @@ export default function CampaignBoardPage() {
               className="max-w-2xl"
             />
           </div>
+
+          {/* Demo Info Banner */}
+          {mockCampaigns.length > 0 && userCampaigns.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mt-4 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/30 dark:to-blue-900/30 border border-purple-200 dark:border-purple-800 rounded-xl p-4"
+            >
+              <div className="flex items-start space-x-3">
+                <InformationCircleIcon className="w-5 h-5 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h3 className="text-sm font-medium text-purple-900 dark:text-purple-100">
+                    Welcome to your Campaign Board!
+                  </h3>
+                  <p className="text-sm text-purple-700 dark:text-purple-200 mt-1">
+                    We&apos;ve added some demo campaigns to show you how the board works. 
+                    Create your first campaign to get started, and the demo campaigns will automatically be reduced.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
 
         {/* Board Content */}
@@ -110,8 +170,9 @@ export default function CampaignBoardPage() {
         >
           {viewMode === 'board' ? (
             <DragDropBoard
+              campaigns={campaigns}
+              isLoading={isLoading}
               onCampaignMove={handleCampaignMove}
-              onCampaignUpdate={handleCampaignUpdate}
             />
           ) : (
             <div className="p-6">

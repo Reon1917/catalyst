@@ -15,6 +15,7 @@ export interface Campaign {
   startDate: string; // ISO date string
   endDate: string; // ISO date string
   overallBudget?: number;
+  status: 'draft' | 'active' | 'paused' | 'completed';
   targetAudience: {
     personaName?: string;
     demographics: string;
@@ -36,6 +37,7 @@ export interface Campaign {
     cpc?: number; // cost per click
     cpl?: number; // cost per lead
   };
+  isMockData?: boolean; // Flag to identify mock campaigns
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
 }

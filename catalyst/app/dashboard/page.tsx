@@ -1,29 +1,24 @@
 'use client';
 
-/**
- * Dashboard page - Overview of all marketing campaigns with modern design
- */
-
-import { useState, useEffect, useMemo } from 'react';
-import Link from 'next/link';
 import { motion } from 'motion/react';
-import { generateCampaigns, Campaign } from '@/lib/mock-data';
-import { 
-  ChartBarIcon, 
-  RocketLaunchIcon, 
+import Link from 'next/link';
+import {
+  ChartBarIcon,
+  RocketLaunchIcon,
   CurrencyDollarIcon,
-  PlusIcon,
-  ArrowTrendingUpIcon,
   EyeIcon,
   CursorArrowRaysIcon,
   CalendarIcon,
   TagIcon,
   UsersIcon,
-  PlayIcon,
-  PauseIcon,
+  PlusIcon,
+  ArrowTrendingUpIcon,
   CheckCircleIcon,
+  PauseCircleIcon,
   DocumentTextIcon
 } from '@heroicons/react/24/outline';
+import { Campaign } from '@/lib/schemas';
+import { useCampaigns } from '@/hooks/useCampaigns';
 
 interface CampaignCardProps {
   campaign: Campaign;
@@ -41,14 +36,15 @@ function CampaignCard({ campaign }: CampaignCardProps) {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return <PlayIcon className="w-3 h-3" />;
-      case 'paused': return <PauseIcon className="w-3 h-3" />;
+      case 'active': return <CheckCircleIcon className="w-3 h-3" />;
+      case 'paused': return <PauseCircleIcon className="w-3 h-3" />;
       case 'completed': return <CheckCircleIcon className="w-3 h-3" />;
       default: return <DocumentTextIcon className="w-3 h-3" />;
     }
   };
 
-  const formatCurrency = (amount: number) => {
+  const formatCurrency = (amount: number | undefined) => {
+    if (!amount) return 'TBD';
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -66,6 +62,23 @@ function CampaignCard({ campaign }: CampaignCardProps) {
     return num.toString();
   };
 
+  // Calculate progress based on campaign dates
+  const calculateProgress = () => {
+    const now = new Date();
+    const start = new Date(campaign.startDate);
+    const end = new Date(campaign.endDate);
+    
+    if (now < start) return 0;
+    if (now > end) return 100;
+    
+    const total = end.getTime() - start.getTime();
+    const elapsed = now.getTime() - start.getTime();
+    return Math.round((elapsed / total) * 100);
+  };
+
+  const progress = calculateProgress();
+  const primaryChannel = campaign.channels[0]?.name || 'Multi-channel';
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -77,10 +90,10 @@ function CampaignCard({ campaign }: CampaignCardProps) {
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 line-clamp-2">
-            {campaign.title}
+            {campaign.name}
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-            {campaign.description}
+            {campaign.messaging.coreMessage}
           </p>
         </div>
         <div className={`flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(campaign.status)}`}>
@@ -94,19 +107,19 @@ function CampaignCard({ campaign }: CampaignCardProps) {
         <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-xl">
           <div className="flex items-center justify-center mb-1">
             <EyeIcon className="w-4 h-4 text-blue-600 dark:text-blue-400 mr-1" />
-            <span className="text-xs text-gray-600 dark:text-gray-400">Impressions</span>
+            <span className="text-xs text-gray-600 dark:text-gray-400">Reach</span>
           </div>
           <div className="text-lg font-bold text-gray-900 dark:text-white">
-            {formatNumber(campaign.metrics.impressions)}
+            {campaign.simulatedResults ? formatNumber(campaign.simulatedResults.reach) : 'TBD'}
           </div>
         </div>
         <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-xl">
           <div className="flex items-center justify-center mb-1">
             <CursorArrowRaysIcon className="w-4 h-4 text-green-600 dark:text-green-400 mr-1" />
-            <span className="text-xs text-gray-600 dark:text-gray-400">CTR</span>
+            <span className="text-xs text-gray-600 dark:text-gray-400">Leads</span>
           </div>
           <div className="text-lg font-bold text-gray-900 dark:text-white">
-            {campaign.metrics.ctr}%
+            {campaign.simulatedResults?.leads || 'TBD'}
           </div>
         </div>
       </div>
@@ -115,12 +128,12 @@ function CampaignCard({ campaign }: CampaignCardProps) {
       <div className="mb-4">
         <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
           <span>Progress</span>
-          <span>{Math.round(campaign.progress)}%</span>
+          <span>{progress}%</span>
         </div>
         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
           <div 
             className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${campaign.progress}%` }}
+            style={{ width: `${progress}%` }}
           ></div>
         </div>
       </div>
@@ -129,7 +142,7 @@ function CampaignCard({ campaign }: CampaignCardProps) {
       <div className="space-y-2 mb-4">
         <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
           <CurrencyDollarIcon className="w-4 h-4 mr-2" />
-          <span>Budget: {formatCurrency(campaign.budget)}</span>
+          <span>Budget: {formatCurrency(campaign.overallBudget)}</span>
         </div>
         <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
           <CalendarIcon className="w-4 h-4 mr-2" />
@@ -137,56 +150,26 @@ function CampaignCard({ campaign }: CampaignCardProps) {
         </div>
         <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
           <TagIcon className="w-4 h-4 mr-2" />
-          <span>{campaign.channel}</span>
+          <span>{primaryChannel}</span>
         </div>
       </div>
 
-      {/* Tags */}
-      {campaign.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1 mb-4">
-          {campaign.tags.slice(0, 3).map((tag, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-          {campaign.tags.length > 3 && (
-            <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full">
-              +{campaign.tags.length - 3}
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* Team */}
-      {campaign.team.length > 0 && (
-        <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
-          <UsersIcon className="w-4 h-4 mr-2" />
-          <span>{campaign.team.length} team member{campaign.team.length !== 1 ? 's' : ''}</span>
-        </div>
-      )}
+      {/* Goal */}
+      <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+        <UsersIcon className="w-4 h-4 mr-2" />
+        <span>Goal: {campaign.goal}</span>
+      </div>
     </motion.div>
   );
 }
 
 export default function DashboardPage() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Generate mock campaigns
-  const campaigns = useMemo(() => generateCampaigns(6), []);
-
-  // Simulate loading
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  const { campaigns, isLoading } = useCampaigns();
 
   // Calculate statistics
   const activeCampaigns = campaigns.filter(c => c.status === 'active').length;
-  const totalBudget = campaigns.reduce((sum, c) => sum + c.budget, 0);
-  const totalImpressions = campaigns.reduce((sum, c) => sum + c.metrics.impressions, 0);
+  const totalBudget = campaigns.reduce((sum, c) => sum + (c.overallBudget || 0), 0);
+  const totalReach = campaigns.reduce((sum, c) => sum + (c.simulatedResults?.reach || 0), 0);
 
   // Loading state
   if (isLoading) {
@@ -220,8 +203,8 @@ export default function DashboardPage() {
           className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
         >
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Collavo Marketing Dashboard</h1>
-            <p className="text-gray-600 dark:text-gray-400">Track your productivity app launch campaigns and growth metrics</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Marketing Dashboard</h1>
+            <p className="text-gray-600 dark:text-gray-400">Track your campaign performance and growth metrics</p>
           </div>
           <Link 
             href="/campaigns/new"
@@ -271,7 +254,7 @@ export default function DashboardPage() {
             <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{activeCampaigns}</div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Active Campaigns</div>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -309,41 +292,52 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-              {(totalImpressions / 1000000).toFixed(1)}M
+              {totalReach.toLocaleString()}
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Total Impressions</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Total Reach</div>
           </motion.div>
         </div>
 
-        {/* Campaigns Grid */}
+        {/* Recent Campaigns */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Your Campaigns</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Recent Campaigns</h2>
             <Link 
               href="/campaigns/board"
               className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm"
             >
-              View Board →
+              View All →
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {campaigns.map((campaign, index) => (
-              <motion.div
-                key={campaign.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + index * 0.1 }}
+          
+          {campaigns.length === 0 ? (
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-12 border border-gray-200 dark:border-gray-700 text-center">
+              <ChartBarIcon className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No campaigns yet</h3>
+              <p className="text-gray-500 dark:text-gray-400 mb-6">
+                Create your first campaign to start tracking performance
+              </p>
+              <Link 
+                href="/campaigns/new"
+                className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-colors"
               >
-                <CampaignCard campaign={campaign} />
-              </motion.div>
-            ))}
-          </div>
+                <PlusIcon className="w-5 h-5 mr-2" />
+                Create Campaign
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {campaigns.slice(0, 6).map((campaign) => (
+                <CampaignCard key={campaign.id} campaign={campaign} />
+              ))}
+            </div>
+          )}
         </motion.div>
       </div>
     </div>
   );
-} 
+}

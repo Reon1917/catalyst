@@ -28,6 +28,7 @@ export default function EditCampaignPage() {
     startDate: '',
     endDate: '',
     overallBudget: 0,
+    status: 'draft',
     targetAudience: {
       personaName: '',
       demographics: '',
@@ -58,6 +59,7 @@ export default function EditCampaignPage() {
             startDate: existingCampaign.startDate,
             endDate: existingCampaign.endDate,
             overallBudget: existingCampaign.overallBudget || 0,
+            status: existingCampaign.status,
             targetAudience: existingCampaign.targetAudience,
             channels: existingCampaign.channels,
             messaging: {
