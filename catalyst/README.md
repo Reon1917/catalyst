@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Catalyst - Marketing Campaign Planner
 
-## Getting Started
+> **Portfolio Project** - A sophisticated marketing campaign management platform showcasing enterprise-level frontend development capabilities with modern React patterns and advanced UX implementations.
 
-First, run the development server:
+## 🎯 Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Catalyst demonstrates advanced frontend engineering through a comprehensive marketing campaign management system. Built with realistic mock data scenarios, this project showcases complex state management, interactive data visualization, and sophisticated user interface patterns that rival enterprise-grade applications.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Note**: This is a portfolio demonstration project utilizing generated mock data to simulate real-world marketing campaign scenarios and performance metrics.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **⌘K Command Palette** - Instant navigation with fuzzy search and keyboard shortcuts
+- **Interactive Analytics Dashboard** - Real-time charts and performance metrics with Chart.js
+- **Drag & Drop Kanban Board** - Visual workflow management with smooth animations
+- **Advanced Search & Filtering** - Faceted search with debounced input and animated tags
+- **Smart Form Validation** - Real-time validation with intelligent date and budget logic
+- **Immersive Mock Data System** - Realistic campaign scenarios with generated metrics
 
-## Learn More
+## 🛠 Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend Framework
+- **Next.js 15.3.2** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **React 18** - Latest React features and patterns
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Styling & UI
+- **Tailwind CSS** - Utility-first CSS framework
+- **Shadcn/UI** - Modern component library
+- **Radix UI** - Accessible primitive components
+- **Motion (Framer Motion)** - Advanced animations and transitions
+- **Heroicons** - Professional icon system
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Data Visualization
+- **Chart.js** - Interactive charts and analytics
+- **React Chart.js 2** - React integration for Chart.js
 
-## Deploy on Vercel
+### Development Tools
+- **Cursor IDE** - AI-powered development environment
+- **ESLint** - Code quality and consistency
+- **PostCSS** - CSS processing and optimization
+- **Geist Font** - Modern typography system
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Design Philosophy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Enterprise-Grade UX** - Sophisticated interactions and micro-animations
+- **Accessibility First** - WCAG compliant components and keyboard navigation
+- **Performance Optimized** - Efficient rendering and data handling
+- **Mobile Responsive** - Seamless experience across all devices
+- **Dark Mode Support** - Complete theme system implementation
+
+## 🚀 Architecture Highlights
+
+- **Component-Driven Development** - Modular, reusable component architecture
+- **Advanced State Management** - Complex form handling and data flow
+- **Performance Optimization** - Lazy loading, memoization, and efficient re-renders
+- **Type Safety** - Comprehensive TypeScript implementation
+- **Modern React Patterns** - Hooks, context, and server components
+
+---
+
+*This project demonstrates proficiency in modern frontend development, complex UI/UX implementation, and enterprise-level application architecture suitable for senior frontend developer positions.*
