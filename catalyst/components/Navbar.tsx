@@ -1,6 +1,6 @@
 /**
  * Navigation component for the Marketing Campaign Planner
- * Provides links to main sections of the application with theme support
+ * Modern design with smooth borders and refined interactions
  */
 
 import Link from 'next/link';
@@ -8,41 +8,54 @@ import ThemeSwitcher from './ThemeSwitcher';
 
 export default function Navbar() {
   return (
-    <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm sticky top-0 z-50">
+    <nav className="bg-background/95 backdrop-blur-xl border-b border-border/30 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Brand */}
           <div className="flex items-center">
             <Link 
               href="/" 
-              className="text-xl font-bold text-foreground hover:text-foreground/80 transition-colors"
+              className="flex items-center hover:opacity-80 transition-all duration-300 hover:scale-105"
             >
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
-                Catalyst
-              </span>
+              <img 
+                src="/branding/logo-and-text.png" 
+                alt="Catalyst - Marketing Campaign Planner" 
+                className="h-8 w-auto"
+              />
             </Link>
-            <span className="ml-2 text-sm text-muted-foreground hidden sm:inline">
-              Marketing Campaign Planner
-            </span>
           </div>
 
           {/* Navigation Links */}
           <div className="flex items-center space-x-4">
             <Link 
               href="/dashboard" 
-              className="text-foreground/70 hover:text-foreground px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-accent"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-accent/60 hover:shadow-sm"
             >
               Dashboard
             </Link>
             <Link 
-              href="/campaigns/new" 
-              className="btn-primary px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-sm hover:shadow-md"
+              href="/analytics" 
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-accent/60 hover:shadow-sm"
             >
-              New Campaign
+              Analytics
+            </Link>
+            <Link 
+              href="/campaigns/board" 
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-accent/60 hover:shadow-sm"
+            >
+              Board
+            </Link>
+            <Link 
+              href="/campaigns/new" 
+              className="btn-primary text-sm font-medium px-5 py-2.5 hover:shadow-lg transition-all duration-200"
+            >
+              + New Campaign
             </Link>
             
             {/* Theme Switcher */}
-            <ThemeSwitcher />
+            <div className="ml-2">
+              <ThemeSwitcher />
+            </div>
           </div>
         </div>
       </div>

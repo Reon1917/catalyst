@@ -1,8 +1,7 @@
 'use client';
 
 /**
- * ThemeSwitcher Component - Toggle between light and dark modes
- * Handles theme persistence and system preference detection
+ * ThemeSwitcher Component - Modern toggle between light and dark modes
  */
 
 import { useState, useEffect } from 'react';
@@ -43,7 +42,15 @@ export const ThemeSwitcher = () => {
   // Prevent hydration mismatch
   if (!mounted) {
     return (
-      <div className="w-10 h-10 rounded-lg bg-muted animate-pulse" />
+      <div 
+        style={{
+          width: '40px',
+          height: '40px',
+          borderRadius: '12px',
+          backgroundColor: 'var(--muted)',
+          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+        }}
+      />
     );
   }
 
@@ -54,36 +61,35 @@ export const ThemeSwitcher = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative p-2 rounded-lg bg-card hover:bg-accent transition-all duration-200 border border-border shadow-sm hover:shadow-md group"
+      style={{
+        padding: '10px',
+        borderRadius: '12px',
+        backgroundColor: 'transparent',
+        border: '1px solid var(--border)',
+        color: 'var(--foreground)',
+        cursor: 'pointer',
+        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = 'var(--accent)';
+        e.currentTarget.style.borderColor = 'rgb(59 130 246 / 0.3)';
+        e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent';
+        e.currentTarget.style.borderColor = 'var(--border)';
+        e.currentTarget.style.boxShadow = 'none';
+      }}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-      title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
-      <div className="relative w-6 h-6">
-        {/* Sun Icon */}
-        <SunIcon 
-          className={`absolute inset-0 w-6 h-6 text-amber-500 transition-all duration-300 ${
-            theme === 'light' 
-              ? 'opacity-100 rotate-0 scale-100' 
-              : 'opacity-0 rotate-90 scale-75'
-          }`}
-        />
-        
-        {/* Moon Icon */}
-        <MoonIcon 
-          className={`absolute inset-0 w-6 h-6 text-slate-700 dark:text-slate-300 transition-all duration-300 ${
-            theme === 'dark' 
-              ? 'opacity-100 rotate-0 scale-100' 
-              : 'opacity-0 -rotate-90 scale-75'
-          }`}
-        />
-      </div>
-      
-      {/* Tooltip-like indicator */}
-      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-        <div className="bg-popover text-popover-foreground text-xs px-2 py-1 rounded border shadow-md whitespace-nowrap">
-          {theme === 'light' ? 'Dark mode' : 'Light mode'}
-        </div>
-      </div>
+      {theme === 'light' ? (
+        <MoonIcon style={{ width: '20px', height: '20px' }} />
+      ) : (
+        <SunIcon style={{ width: '20px', height: '20px' }} />
+      )}
     </button>
   );
 };
