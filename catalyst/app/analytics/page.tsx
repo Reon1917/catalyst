@@ -29,6 +29,7 @@ import {
   ComputerDesktopIcon,
   CalendarIcon
 } from '@heroicons/react/24/outline';
+import { generateCampaigns, generateAnalyticsData } from '@/lib/mock-data';
 
 // Register Chart.js components
 ChartJS.register(
@@ -89,40 +90,21 @@ export default function AnalyticsPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Generate realistic mock data
-  const generateTimeSeriesData = (days: number) => {
-    const data = [];
-    const labels = [];
-    const now = new Date();
+  // Generate realistic mock data using our data generator
+  const mockCampaigns = useMemo(() => generateCampaigns(8), []);
+  const analyticsData = useMemo(() => generateAnalyticsData(mockCampaigns), [mockCampaigns]);
+
+  const { labels, data: impressionsData, clicksData, conversionsData } = useMemo(() => {
+    const days = timeRange === '7d' ? 7 : timeRange === '30d' ? 30 : 90;
+    const timeSeriesData = analyticsData.timeSeriesData.slice(-days);
     
-    for (let i = days - 1; i >= 0; i--) {
-      const date = new Date(now);
-      date.setDate(date.getDate() - i);
-      labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-      
-      // Generate realistic campaign performance data
-      const baseValue = 1000 + Math.sin(i * 0.3) * 200;
-      const randomVariation = (Math.random() - 0.5) * 100;
-      data.push(Math.max(0, Math.round(baseValue + randomVariation)));
-    }
-    
-    return { labels, data };
-  };
-
-  const { labels, data: impressionsData } = useMemo(() => 
-    generateTimeSeriesData(timeRange === '7d' ? 7 : timeRange === '30d' ? 30 : 90), 
-    [timeRange]
-  );
-
-  const clicksData = useMemo(() => 
-    impressionsData.map(val => Math.round(val * (0.02 + Math.random() * 0.03))),
-    [impressionsData]
-  );
-
-  const conversionsData = useMemo(() => 
-    clicksData.map(val => Math.round(val * (0.1 + Math.random() * 0.15))),
-    [clicksData]
-  );
+    return {
+      labels: timeSeriesData.map(d => new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
+      data: timeSeriesData.map(d => d.impressions),
+      clicksData: timeSeriesData.map(d => d.clicks),
+      conversionsData: timeSeriesData.map(d => d.conversions)
+    };
+  }, [analyticsData, timeRange]);
 
   // Chart configurations
   const lineChartData = {
@@ -156,11 +138,11 @@ export default function AnalyticsPage() {
   };
 
   const barChartData = {
-    labels: ['Email', 'Social Media', 'Search Ads', 'Display', 'Direct'],
+    labels: ['Product Hunt', 'LinkedIn', 'Content Marketing', 'Influencers', 'Twitter/X'],
     datasets: [
       {
         label: 'Campaign Performance',
-        data: [65, 59, 80, 81, 56],
+        data: [89, 72, 65, 58, 43],
         backgroundColor: [
           'rgba(59, 130, 246, 0.8)',
           'rgba(16, 185, 129, 0.8)',
@@ -259,8 +241,8 @@ export default function AnalyticsPage() {
           className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
         >
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Analytics Dashboard</h1>
-            <p className="text-gray-600 dark:text-gray-400">Track your campaign performance and insights</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Collavo Analytics</h1>
+            <p className="text-gray-600 dark:text-gray-400">Monitor your productivity app's growth and user acquisition</p>
           </div>
           
           <div className="flex items-center space-x-2">
@@ -279,30 +261,30 @@ export default function AnalyticsPage() {
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <MetricCard
-            title="Total Impressions"
-            value="2.4M"
-            change={12.5}
-            icon={EyeIcon}
+            title="Beta Signups"
+            value="1,247"
+            change={34.2}
+            icon={UsersIcon}
             trend="up"
           />
           <MetricCard
-            title="Click-through Rate"
-            value="3.2%"
-            change={-2.1}
-            icon={CursorArrowRaysIcon}
-            trend="down"
-          />
-          <MetricCard
-            title="Conversion Rate"
-            value="12.8%"
-            change={8.3}
+            title="Trial Conversion"
+            value="18.5%"
+            change={5.3}
             icon={ArrowTrendingUpIcon}
             trend="up"
           />
           <MetricCard
-            title="Revenue"
-            value="$48,392"
-            change={15.7}
+            title="Product Hunt Votes"
+            value="892"
+            change={127.8}
+            icon={CursorArrowRaysIcon}
+            trend="up"
+          />
+          <MetricCard
+            title="MRR Growth"
+            value="$12,450"
+            change={28.9}
             icon={CurrencyDollarIcon}
             trend="up"
           />
@@ -392,10 +374,10 @@ export default function AnalyticsPage() {
             
             <div className="space-y-4">
               {[
-                { action: 'New conversion', campaign: 'Summer Sale 2024', time: '2 min ago', value: '+$127' },
-                { action: 'Campaign clicked', campaign: 'Product Launch', time: '5 min ago', value: '+1 click' },
-                { action: 'Email opened', campaign: 'Newsletter #42', time: '8 min ago', value: '+1 open' },
-                { action: 'Ad impression', campaign: 'Brand Awareness', time: '12 min ago', value: '+1 view' },
+                { action: 'New trial signup', campaign: 'Collavo Beta Launch', time: '2 min ago', value: '+1 trial' },
+                { action: 'Product Hunt upvote', campaign: 'Product Hunt Launch Day', time: '5 min ago', value: '+1 vote' },
+                { action: 'LinkedIn engagement', campaign: 'LinkedIn Professional Outreach', time: '8 min ago', value: '+1 click' },
+                { action: 'Influencer mention', campaign: 'Productivity Influencer Campaign', time: '12 min ago', value: '+1 mention' },
               ].map((activity, index) => (
                 <motion.div
                   key={index}

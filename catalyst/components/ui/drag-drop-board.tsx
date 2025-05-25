@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   PlusIcon,
@@ -10,19 +10,10 @@ import {
   UserGroupIcon,
   ChartBarIcon
 } from '@heroicons/react/24/outline';
+import { generateCampaigns, Campaign as MockCampaign } from '@/lib/mock-data';
 
-interface Campaign {
-  id: string;
-  title: string;
-  description: string;
-  budget: number;
-  startDate: string;
-  endDate: string;
-  status: 'draft' | 'active' | 'paused' | 'completed';
-  channel: string;
-  progress: number;
-  team: string[];
-}
+// Use the Campaign interface from mock-data
+type Campaign = MockCampaign;
 
 interface Column {
   id: string;
@@ -37,78 +28,53 @@ interface DragDropBoardProps {
   onCampaignUpdate: (campaign: Campaign) => void;
 }
 
-const mockCampaigns: Campaign[] = [
-  {
-    id: '1',
-    title: 'Summer Sale 2024',
-    description: 'Seasonal promotion campaign',
-    budget: 15000,
-    startDate: '2024-06-01',
-    endDate: '2024-08-31',
-    status: 'active',
-    channel: 'Email + Social',
-    progress: 65,
-    team: ['John', 'Sarah', 'Mike']
-  },
-  {
-    id: '2',
-    title: 'Product Launch',
-    description: 'New product introduction',
-    budget: 25000,
-    startDate: '2024-07-15',
-    endDate: '2024-09-15',
-    status: 'draft',
-    channel: 'Multi-channel',
-    progress: 30,
-    team: ['Alice', 'Bob']
-  },
-  {
-    id: '3',
-    title: 'Brand Awareness',
-    description: 'Increase brand visibility',
-    budget: 8000,
-    startDate: '2024-05-01',
-    endDate: '2024-07-31',
-    status: 'paused',
-    channel: 'Display Ads',
-    progress: 45,
-    team: ['Carol', 'David', 'Eve']
-  }
-];
+// Generate realistic mock campaigns
+const generateMockCampaigns = () => generateCampaigns(8);
 
-const defaultColumns: Column[] = [
-  {
-    id: 'draft',
-    title: 'Draft',
-    campaigns: [mockCampaigns[1]],
-    color: 'bg-gray-100 dark:bg-gray-800'
-  },
-  {
-    id: 'active',
-    title: 'Active',
-    campaigns: [mockCampaigns[0]],
-    color: 'bg-blue-50 dark:bg-blue-900/20'
-  },
-  {
-    id: 'paused',
-    title: 'Paused',
-    campaigns: [mockCampaigns[2]],
-    color: 'bg-yellow-50 dark:bg-yellow-900/20'
-  },
-  {
-    id: 'completed',
-    title: 'Completed',
-    campaigns: [],
-    color: 'bg-green-50 dark:bg-green-900/20'
-  }
-];
+const createDefaultColumns = (campaigns: Campaign[]): Column[] => {
+  const draftCampaigns = campaigns.filter(c => c.status === 'draft');
+  const activeCampaigns = campaigns.filter(c => c.status === 'active');
+  const pausedCampaigns = campaigns.filter(c => c.status === 'paused');
+  const completedCampaigns = campaigns.filter(c => c.status === 'completed');
+
+  return [
+    {
+      id: 'draft',
+      title: 'Draft',
+      campaigns: draftCampaigns,
+      color: 'bg-gray-100 dark:bg-gray-800'
+    },
+    {
+      id: 'active',
+      title: 'Active',
+      campaigns: activeCampaigns,
+      color: 'bg-blue-50 dark:bg-blue-900/20'
+    },
+    {
+      id: 'paused',
+      title: 'Paused',
+      campaigns: pausedCampaigns,
+      color: 'bg-yellow-50 dark:bg-yellow-900/20'
+    },
+    {
+      id: 'completed',
+      title: 'Completed',
+      campaigns: completedCampaigns,
+      color: 'bg-green-50 dark:bg-green-900/20'
+    }
+  ];
+};
 
 export default function DragDropBoard({ 
-  initialColumns = defaultColumns, 
+  initialColumns, 
   onCampaignMove = () => {}, 
   onCampaignUpdate = () => {} 
 }: Partial<DragDropBoardProps>) {
-  const [columns, setColumns] = useState<Column[]>(initialColumns);
+  // Generate mock campaigns and create columns
+  const mockCampaigns = useMemo(() => generateMockCampaigns(), []);
+  const defaultColumns = useMemo(() => createDefaultColumns(mockCampaigns), [mockCampaigns]);
+  
+  const [columns, setColumns] = useState<Column[]>(initialColumns || defaultColumns);
   const [draggedCampaign, setDraggedCampaign] = useState<Campaign | null>(null);
   const [draggedOver, setDraggedOver] = useState<string | null>(null);
   const dragCounter = useRef(0);
