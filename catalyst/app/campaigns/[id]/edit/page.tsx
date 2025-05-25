@@ -85,13 +85,19 @@ export default function EditCampaignPage() {
     if (name.includes('.')) {
       // Handle nested object properties
       const [parent, child] = name.split('.');
-      setFormData(prev => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent as keyof CampaignInput],
-          [child]: type === 'number' ? parseFloat(value) || 0 : value
+      setFormData(prev => {
+        const parentValue = prev[parent as keyof CampaignInput];
+        if (typeof parentValue === 'object' && parentValue !== null && !Array.isArray(parentValue)) {
+          return {
+            ...prev,
+            [parent]: {
+              ...parentValue,
+              [child]: type === 'number' ? parseFloat(value) || 0 : value
+            }
+          };
         }
-      }));
+        return prev;
+      });
     } else {
       // Handle top-level properties
       setFormData(prev => ({
