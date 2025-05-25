@@ -6,11 +6,22 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import EnhancedForm from '@/components/ui/enhanced-form';
 
+interface FormData {
+  title: string;
+  description: string;
+  budget: string;
+  startDate: string;
+  endDate: string;
+  channel: string;
+  tags: string[];
+  team: string[];
+}
+
 export default function NewCampaignPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (formData: Record<string, unknown>) => {
+  const handleSubmit = async (formData: FormData) => {
     setIsLoading(true);
     
     // Simulate API call
