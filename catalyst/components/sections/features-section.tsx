@@ -1,44 +1,46 @@
 "use client";
 
 import { 
+  CommandLineIcon,
   ChartBarIcon, 
-  CurrencyDollarIcon, 
-  UserGroupIcon,
-  CalendarIcon,
+  RectangleGroupIcon,
+  MagnifyingGlassIcon,
+  DocumentCheckIcon,
+  CursorArrowRaysIcon,
   PresentationChartLineIcon,
-  CogIcon
+  SparklesIcon
 } from '@heroicons/react/24/outline';
 
 const features = [
   {
+    icon: CommandLineIcon,
+    title: 'Command Palette (⌘K)',
+    description: 'Navigate instantly with keyboard shortcuts, fuzzy search, and categorized commands for lightning-fast workflow.'
+  },
+  {
     icon: ChartBarIcon,
-    title: 'Campaign Analytics',
-    description: 'Track performance metrics and analyze campaign effectiveness with detailed insights.'
+    title: 'Interactive Analytics',
+    description: 'Real-time charts, performance metrics, and live activity feeds with Chart.js integration.'
   },
   {
-    icon: CurrencyDollarIcon,
-    title: 'Budget Management',
-    description: 'Allocate and monitor budgets across different channels and campaign objectives.'
+    icon: RectangleGroupIcon,
+    title: 'Drag & Drop Kanban',
+    description: 'Visual campaign management with smooth animations, expandable cards, and status tracking.'
   },
   {
-    icon: UserGroupIcon,
-    title: 'Audience Targeting',
-    description: 'Define and segment target audiences for precise marketing campaign delivery.'
+    icon: MagnifyingGlassIcon,
+    title: 'Advanced Search & Filters',
+    description: 'Faceted search with debounced input, multiple filter categories, and animated filter tags.'
   },
   {
-    icon: CalendarIcon,
-    title: 'Campaign Scheduling',
-    description: 'Plan and schedule campaigns with flexible timing and automated execution.'
+    icon: DocumentCheckIcon,
+    title: 'Smart Form Validation',
+    description: 'Enhanced forms with real-time validation, date range logic, and intelligent budget formatting.'
   },
   {
-    icon: PresentationChartLineIcon,
-    title: 'Performance Simulation',
-    description: 'Simulate campaign outcomes and optimize strategies before launch.'
-  },
-  {
-    icon: CogIcon,
-    title: 'Workflow Automation',
-    description: 'Streamline repetitive tasks and automate campaign management processes.'
+    icon: SparklesIcon,
+    title: 'Immersive Mock Data',
+    description: 'Realistic campaign scenarios with generated metrics, team members, and performance data.'
   }
 ];
 
@@ -49,10 +51,11 @@ export function FeaturesSection() {
         {/* Section header */}
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-4">
-            Everything you need to succeed
+            Sophisticated Features for Modern Marketing
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive tools for planning, executing, and analyzing your marketing campaigns.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Experience enterprise-level functionality with intuitive design. From command palette navigation to 
+            advanced analytics - every feature is crafted for productivity and performance.
           </p>
         </div>
 

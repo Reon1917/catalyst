@@ -15,11 +15,13 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link 
               href="/" 
-              className="text-xl font-bold text-foreground hover:text-primary transition-all duration-300 hover:scale-105"
+              className="flex items-center hover:opacity-80 transition-all duration-300 hover:scale-105"
             >
-              <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                Catalyst
-              </span>
+              <img 
+                src="/branding/logo-and-text.png" 
+                alt="Catalyst - Marketing Campaign Planner" 
+                className="h-8 w-auto"
+              />
             </Link>
           </div>
 

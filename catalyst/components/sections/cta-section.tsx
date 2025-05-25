@@ -6,12 +6,20 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 export function CTASection() {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto text-center animate-fade-in">
+      <div className="max-w-4xl mx-auto text-center animate-fade-in">
+        <div className="mb-8">
+          <img 
+            src="/branding/logo-only.png" 
+            alt="Catalyst Logo" 
+            className="h-16 w-16 mx-auto mb-6 opacity-80"
+          />
+        </div>
         <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-4">
-          Ready to transform your marketing?
+          Experience Enterprise-Level Marketing Tools
         </h2>
-        <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-          Join thousands of marketers who trust Catalyst to drive their campaign success.
+        <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
+          From command palette navigation to advanced analytics - discover why Catalyst is the 
+          sophisticated choice for modern marketing teams.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

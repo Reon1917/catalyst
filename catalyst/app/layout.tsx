@@ -18,6 +18,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Catalyst - Marketing Campaign Planner",
   description: "Plan, manage, and optimize your marketing campaigns with data-driven insights",
+  icons: {
+    icon: "/branding/logo-only.png",
+    shortcut: "/branding/logo-only.png",
+    apple: "/branding/logo-only.png",
+  },
 };
 
 export default function RootLayout({

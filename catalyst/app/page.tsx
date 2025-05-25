@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { 
   HeroSection, 
   FeaturesSection, 
+  ShowcaseSection,
   BenefitsSection, 
   CTASection 
 } from '@/components/sections';
@@ -32,6 +33,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background">
       <HeroSection />
       <FeaturesSection />
+      <ShowcaseSection />
       <BenefitsSection />
       <CTASection />
     </div>

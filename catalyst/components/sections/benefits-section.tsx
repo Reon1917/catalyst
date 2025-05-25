@@ -3,12 +3,12 @@
 import { CheckIcon } from '@heroicons/react/24/outline';
 
 const benefits = [
-  'Streamline campaign planning and execution',
-  'Optimize budget allocation across channels',
-  'Improve targeting with detailed audience insights',
-  'Simulate campaign performance before launch',
-  'Track real-time analytics and ROI',
-  'Automate repetitive marketing tasks'
+  'Navigate 10x faster with command palette shortcuts',
+  'Visualize campaigns with drag-and-drop kanban boards',
+  'Monitor performance with real-time interactive charts',
+  'Filter and search campaigns with advanced faceted search',
+  'Validate forms intelligently with smart date and budget logic',
+  'Experience realistic scenarios with immersive mock data'
 ];
 
 export function BenefitsSection() {
@@ -19,10 +19,11 @@ export function BenefitsSection() {
           {/* Content */}
           <div className="animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-6">
-              Why choose Catalyst?
+              Built for Power Users
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Transform your marketing approach with data-driven insights and streamlined workflows that deliver measurable results.
+              Experience the next generation of marketing campaign management with sophisticated features that 
+              rival enterprise tools while maintaining intuitive usability.
             </p>
             
             <ul className="space-y-4">
@@ -42,13 +43,18 @@ export function BenefitsSection() {
           </div>
 
           {/* Modern visual element */}
-          <div className="animate-scale-in">
-            <div className="card p-8 text-center bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
-              <div className="text-4xl font-semibold text-primary mb-2">95%</div>
-              <div className="text-muted-foreground mb-4">Success Rate</div>
-              <div className="text-sm text-muted-foreground">
-                of campaigns see improved performance with our platform
-              </div>
+          <div className="animate-scale-in space-y-4">
+            <div className="card p-6 text-center bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-blue-200 dark:border-blue-800">
+              <div className="text-3xl font-semibold text-blue-600 dark:text-blue-400 mb-2">⌘K</div>
+              <div className="text-sm text-blue-700 dark:text-blue-300">Command Palette</div>
+            </div>
+            <div className="card p-6 text-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/30 dark:to-green-900/30 border-green-200 dark:border-green-800">
+              <div className="text-3xl font-semibold text-green-600 dark:text-green-400 mb-2">📊</div>
+              <div className="text-sm text-green-700 dark:text-green-300">Live Analytics</div>
+            </div>
+            <div className="card p-6 text-center bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/30 dark:to-purple-900/30 border-purple-200 dark:border-purple-800">
+              <div className="text-3xl font-semibold text-purple-600 dark:text-purple-400 mb-2">🎯</div>
+              <div className="text-sm text-purple-700 dark:text-purple-300">Drag & Drop</div>
             </div>
           </div>
         </div>
