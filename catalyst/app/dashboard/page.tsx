@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * Dashboard page - Overview of all marketing campaigns
+ * Dashboard page - Overview of all marketing campaigns with modern design
  */
 
 import { useState, useEffect } from 'react';
@@ -9,6 +9,12 @@ import Link from 'next/link';
 import { Campaign } from '@/lib/schemas';
 import { getCampaigns, deleteCampaign } from '@/lib/data';
 import CampaignCard from '@/components/campaigns/CampaignCard';
+import { 
+  ChartBarIcon, 
+  RocketLaunchIcon, 
+  CurrencyDollarIcon,
+  PlusIcon
+} from '@heroicons/react/24/outline';
 
 export default function DashboardPage() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -36,7 +42,6 @@ export default function DashboardPage() {
       try {
         const success = deleteCampaign(id);
         if (success) {
-          // Re-fetch campaigns to update the list
           const updatedCampaigns = getCampaigns();
           setCampaigns(updatedCampaigns);
         } else {
@@ -49,99 +54,122 @@ export default function DashboardPage() {
     }
   };
 
+  // Calculate statistics
+  const activeCampaigns = campaigns.filter(c => new Date(c.endDate) > new Date()).length;
+  const totalBudget = campaigns.reduce((sum, c) => sum + (c.overallBudget || 0), 0);
+
+  // Loading state
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-        <div className="border-b border-border pb-4">
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="mt-2 text-muted-foreground">Overview of your marketing campaigns and performance</p>
-        </div>
-        
-        <div className="card-enhanced p-6 rounded-lg">
-          <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-muted rounded w-3/4"></div>
-            <div className="h-4 bg-muted rounded w-1/2"></div>
-            <div className="h-4 bg-muted rounded w-5/6"></div>
+      <div className="min-h-screen bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="animate-pulse space-y-8">
+            <div className="h-8 bg-muted rounded-xl w-64"></div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="card p-6">
+                  <div className="h-6 bg-muted rounded-xl w-32 mb-4"></div>
+                  <div className="h-8 bg-muted rounded-xl w-16 mb-2"></div>
+                  <div className="h-4 bg-muted rounded-xl w-24"></div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
+  // Empty state component
+  const EmptyState = () => (
+    <div className="text-center py-16">
+      <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 border border-primary/20 rounded-2xl flex items-center justify-center">
+        <ChartBarIcon className="w-8 h-8 text-primary" />
+      </div>
+      <h3 className="text-xl font-medium text-foreground mb-2">No campaigns yet</h3>
+      <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+        Get started by creating your first marketing campaign and unlock the power of data-driven marketing.
+      </p>
+      <Link 
+        href="/campaigns/new"
+        className="btn-primary inline-flex items-center"
+      >
+        <PlusIcon className="w-5 h-5 mr-2" />
+        Create Your First Campaign
+      </Link>
+    </div>
+  );
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Header Section */}
-      <div className="border-b border-border pb-4">
-        <div className="flex justify-between items-center">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+        {/* Header */}
+        <div className="flex justify-between items-center animate-fade-in">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-            <p className="mt-2 text-muted-foreground">Overview of your marketing campaigns and performance</p>
+            <h1 className="text-3xl font-semibold text-foreground mb-2">Dashboard</h1>
+            <p className="text-muted-foreground">Overview of your marketing campaigns</p>
           </div>
-          
-          {/* Create New Campaign Button */}
           <Link 
             href="/campaigns/new"
-            className="group relative inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-sm"
+            className="btn-primary inline-flex items-center"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-            <span className="relative">Create New Campaign</span>
+            <PlusIcon className="w-5 h-5 mr-2" />
+            New Campaign
           </Link>
         </div>
-      </div>
 
-      {/* Campaign Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="card-enhanced p-6 rounded-lg">
-          <h3 className="text-lg font-semibold text-foreground">Total Campaigns</h3>
-          <p className="text-3xl font-bold text-primary mt-2">{campaigns.length}</p>
-        </div>
-        <div className="card-enhanced p-6 rounded-lg">
-          <h3 className="text-lg font-semibold text-foreground">Active Campaigns</h3>
-          <p className="text-3xl font-bold text-success mt-2">
-            {campaigns.filter(c => new Date(c.endDate) > new Date()).length}
-          </p>
-        </div>
-        <div className="card-enhanced p-6 rounded-lg">
-          <h3 className="text-lg font-semibold text-foreground">Total Budget</h3>
-          <p className="text-3xl font-bold text-info mt-2">
-            ${campaigns.reduce((sum, c) => sum + (c.overallBudget || 0), 0).toLocaleString()}
-          </p>
-        </div>
-      </div>
-
-      {/* Campaigns Section */}
-      <div>
-        <h2 className="text-2xl font-bold text-foreground mb-6">Your Campaigns</h2>
-        
-        {campaigns.length === 0 ? (
-          <div className="card-enhanced p-12 rounded-lg text-center">
-            <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 mx-auto mb-4 bg-muted rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
+        {/* Statistics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-up">
+          <div className="card p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
+                <ChartBarIcon className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">No campaigns yet</h3>
-              <p className="text-muted-foreground mb-6">Get started by creating your first marketing campaign</p>
-              <Link 
-                href="/campaigns/new"
-                className="btn-primary inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition-all"
-              >
-                Create Your First Campaign
-              </Link>
             </div>
+            <div className="text-2xl font-semibold text-foreground mb-1">{campaigns.length}</div>
+            <div className="text-sm text-muted-foreground">Total Campaigns</div>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {campaigns.map((campaign) => (
-              <CampaignCard
-                key={campaign.id}
-                campaign={campaign}
-                onDelete={handleDeleteCampaign}
-              />
-            ))}
+          
+          <div className="card p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
+                <RocketLaunchIcon className="w-5 h-5 text-primary" />
+              </div>
+            </div>
+            <div className="text-2xl font-semibold text-foreground mb-1">{activeCampaigns}</div>
+            <div className="text-sm text-muted-foreground">Active Campaigns</div>
           </div>
-        )}
+          
+          <div className="card p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
+                <CurrencyDollarIcon className="w-5 h-5 text-primary" />
+              </div>
+            </div>
+            <div className="text-2xl font-semibold text-foreground mb-1">${totalBudget.toLocaleString()}</div>
+            <div className="text-sm text-muted-foreground">Total Budget</div>
+          </div>
+        </div>
+
+        {/* Campaigns */}
+        <div className="animate-slide-up" style={{animationDelay: '0.1s'}}>
+          {campaigns.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <div>
+              <h2 className="text-xl font-medium text-foreground mb-6">Your Campaigns</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {campaigns.map((campaign) => (
+                  <CampaignCard
+                    key={campaign.id}
+                    campaign={campaign}
+                    onDelete={handleDeleteCampaign}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
