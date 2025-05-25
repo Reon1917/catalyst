@@ -17,7 +17,9 @@ export default function Navbar() {
               href="/" 
               className="text-xl font-bold text-foreground hover:text-foreground/80 transition-colors"
             >
-              <span className="text-gradient">Catalyst</span>
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+                Catalyst
+              </span>
             </Link>
             <span className="ml-2 text-sm text-muted-foreground hidden sm:inline">
               Marketing Campaign Planner

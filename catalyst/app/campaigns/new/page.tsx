@@ -232,13 +232,13 @@ export default function NewCampaignPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
-      <div className="border-b border-gray-200 pb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Create New Campaign</h1>
-        <p className="mt-2 text-gray-600">Set up a new marketing campaign with goals, audience, and channels</p>
+      <div className="border-b border-border pb-6">
+        <h1 className="text-3xl font-bold text-foreground">Create New Campaign</h1>
+        <p className="mt-2 text-muted-foreground">Set up a new marketing campaign with goals, audience, and channels</p>
       </div>
 
       {/* Progress Indicator */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="card-enhanced rounded-lg shadow p-6">
         <div className="flex items-center justify-between mb-8">
           {stepTitles.map((title, index) => {
             const stepNumber = index + 1;
@@ -249,10 +249,10 @@ export default function NewCampaignPage() {
               <div key={stepNumber} className="flex items-center">
                 <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
                   isActive 
-                    ? 'border-blue-600 bg-blue-600 text-white' 
+                    ? 'border-primary bg-primary text-primary-foreground' 
                     : isCompleted 
-                    ? 'border-green-600 bg-green-600 text-white'
-                    : 'border-gray-300 bg-white text-gray-500'
+                    ? 'border-success bg-success text-white dark:text-black'
+                    : 'border-border bg-background text-muted-foreground'
                 }`}>
                   {isCompleted ? (
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -263,15 +263,15 @@ export default function NewCampaignPage() {
                   )}
                 </div>
                 <div className="ml-3">
-                  <p className={`text-sm font-medium ${isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-500'}`}>
+                  <p className={`text-sm font-medium ${isActive ? 'text-primary' : isCompleted ? 'text-success' : 'text-muted-foreground'}`}>
                     Step {stepNumber}
                   </p>
-                  <p className={`text-xs ${isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-500'}`}>
+                  <p className={`text-xs ${isActive ? 'text-primary' : isCompleted ? 'text-success' : 'text-muted-foreground'}`}>
                     {title}
                   </p>
                 </div>
                 {index < stepTitles.length - 1 && (
-                  <div className={`flex-1 h-0.5 mx-4 ${isCompleted ? 'bg-green-600' : 'bg-gray-300'}`} />
+                  <div className={`flex-1 h-0.5 mx-4 ${isCompleted ? 'bg-success' : 'bg-border'}`} />
                 )}
               </div>
             );
@@ -284,15 +284,15 @@ export default function NewCampaignPage() {
           {currentStep === 1 && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-gray-900">Campaign Basics</h2>
-                <div className="text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                <h2 className="text-xl font-semibold text-foreground">Campaign Basics</h2>
+                <div className="text-sm text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
                   💡 Defining a clear goal is key
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                     Campaign Name *
                   </label>
                   <input
@@ -301,16 +301,16 @@ export default function NewCampaignPage() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      errors.name ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors.name ? 'border-destructive' : 'border-border'
                     }`}
                     placeholder="Enter campaign name"
                   />
-                  {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+                  {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="goal" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="goal" className="block text-sm font-medium text-foreground mb-2">
                     Campaign Goal *
                   </label>
                   <select
@@ -318,8 +318,8 @@ export default function NewCampaignPage() {
                     name="goal"
                     value={formData.goal}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      errors.goal ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors.goal ? 'border-destructive' : 'border-border'
                     }`}
                   >
                     <option value="">Select a goal</option>
@@ -329,11 +329,11 @@ export default function NewCampaignPage() {
                     <option value="Customer Retention">Customer Retention</option>
                     <option value="Product Launch">Product Launch</option>
                   </select>
-                  {errors.goal && <p className="mt-1 text-sm text-red-600">{errors.goal}</p>}
+                  {errors.goal && <p className="mt-1 text-sm text-destructive">{errors.goal}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="startDate" className="block text-sm font-medium text-foreground mb-2">
                     Start Date *
                   </label>
                   <input
@@ -342,15 +342,15 @@ export default function NewCampaignPage() {
                     name="startDate"
                     value={formData.startDate}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      errors.startDate ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors.startDate ? 'border-destructive' : 'border-border'
                     }`}
                   />
-                  {errors.startDate && <p className="mt-1 text-sm text-red-600">{errors.startDate}</p>}
+                  {errors.startDate && <p className="mt-1 text-sm text-destructive">{errors.startDate}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="endDate" className="block text-sm font-medium text-foreground mb-2">
                     End Date *
                   </label>
                   <input
@@ -359,15 +359,15 @@ export default function NewCampaignPage() {
                     name="endDate"
                     value={formData.endDate}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      errors.endDate ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors.endDate ? 'border-destructive' : 'border-border'
                     }`}
                   />
-                  {errors.endDate && <p className="mt-1 text-sm text-red-600">{errors.endDate}</p>}
+                  {errors.endDate && <p className="mt-1 text-sm text-destructive">{errors.endDate}</p>}
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="overallBudget" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="overallBudget" className="block text-sm font-medium text-foreground mb-2">
                     Overall Budget ($)
                   </label>
                   <input
@@ -376,7 +376,9 @@ export default function NewCampaignPage() {
                     name="overallBudget"
                     value={formData.overallBudget}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors.overallBudget ? 'border-destructive' : 'border-border'
+                    }`}
                     placeholder="Enter total budget"
                     min="0"
                     step="100"
@@ -390,15 +392,15 @@ export default function NewCampaignPage() {
           {currentStep === 2 && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-gray-900">Target Audience</h2>
-                <div className="text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                <h2 className="text-xl font-semibold text-foreground">Target Audience</h2>
+                <div className="text-sm text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
                   💡 Understand your audience deeply
                 </div>
               </div>
               
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="targetAudience.personaName" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="targetAudience.personaName" className="block text-sm font-medium text-foreground mb-2">
                     Primary Persona Name
                   </label>
                   <input
@@ -407,13 +409,15 @@ export default function NewCampaignPage() {
                     name="targetAudience.personaName"
                     value={formData.targetAudience.personaName}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors['targetAudience.personaName'] ? 'border-destructive' : 'border-border'
+                    }`}
                     placeholder="e.g., Tech-Savvy Millennials, Busy Working Parents"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="targetAudience.demographics" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="targetAudience.demographics" className="block text-sm font-medium text-foreground mb-2">
                     Key Demographics *
                   </label>
                   <textarea
@@ -422,16 +426,16 @@ export default function NewCampaignPage() {
                     value={formData.targetAudience.demographics}
                     onChange={handleInputChange}
                     rows={3}
-                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      errors['targetAudience.demographics'] ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors['targetAudience.demographics'] ? 'border-destructive' : 'border-border'
                     }`}
                     placeholder="Age range, gender, location, income level, education, occupation..."
                   />
-                  {errors['targetAudience.demographics'] && <p className="mt-1 text-sm text-red-600">{errors['targetAudience.demographics']}</p>}
+                  {errors['targetAudience.demographics'] && <p className="mt-1 text-sm text-destructive">{errors['targetAudience.demographics']}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="targetAudience.interestsAndBehaviors" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="targetAudience.interestsAndBehaviors" className="block text-sm font-medium text-foreground mb-2">
                     Interests & Behaviors *
                   </label>
                   <textarea
@@ -440,16 +444,16 @@ export default function NewCampaignPage() {
                     value={formData.targetAudience.interestsAndBehaviors}
                     onChange={handleInputChange}
                     rows={3}
-                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      errors['targetAudience.interestsAndBehaviors'] ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors['targetAudience.interestsAndBehaviors'] ? 'border-destructive' : 'border-border'
                     }`}
                     placeholder="Hobbies, online behavior, shopping habits, preferred platforms..."
                   />
-                  {errors['targetAudience.interestsAndBehaviors'] && <p className="mt-1 text-sm text-red-600">{errors['targetAudience.interestsAndBehaviors']}</p>}
+                  {errors['targetAudience.interestsAndBehaviors'] && <p className="mt-1 text-sm text-destructive">{errors['targetAudience.interestsAndBehaviors']}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="targetAudience.painPoints" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="targetAudience.painPoints" className="block text-sm font-medium text-foreground mb-2">
                     Pain Points/Needs *
                   </label>
                   <textarea
@@ -458,12 +462,12 @@ export default function NewCampaignPage() {
                     value={formData.targetAudience.painPoints}
                     onChange={handleInputChange}
                     rows={3}
-                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      errors['targetAudience.painPoints'] ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors['targetAudience.painPoints'] ? 'border-destructive' : 'border-border'
                     }`}
                     placeholder="Challenges, frustrations, needs your product/service addresses..."
                   />
-                  {errors['targetAudience.painPoints'] && <p className="mt-1 text-sm text-red-600">{errors['targetAudience.painPoints']}</p>}
+                  {errors['targetAudience.painPoints'] && <p className="mt-1 text-sm text-destructive">{errors['targetAudience.painPoints']}</p>}
                 </div>
               </div>
             </div>
@@ -473,15 +477,15 @@ export default function NewCampaignPage() {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-gray-900">Channels & Budget Allocation</h2>
-                <div className="text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                <h2 className="text-xl font-semibold text-foreground">Channels & Budget Allocation</h2>
+                <div className="text-sm text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
                   💡 Choose channels where your audience is
                 </div>
               </div>
               
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-4">
+                  <label className="block text-sm font-medium text-foreground mb-4">
                     Select Marketing Channels *
                   </label>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -492,8 +496,8 @@ export default function NewCampaignPage() {
                           key={channel.id}
                           className={`border rounded-lg p-4 cursor-pointer transition-all ${
                             isSelected 
-                              ? 'border-blue-500 bg-blue-50' 
-                              : 'border-gray-300 hover:border-gray-400'
+                              ? 'border-primary bg-primary/10 text-foreground' 
+                              : 'border-border hover:border-primary bg-card text-card-foreground'
                           }`}
                           onClick={() => handleChannelToggle(channel.id, channel.name)}
                         >
@@ -502,39 +506,39 @@ export default function NewCampaignPage() {
                               type="checkbox"
                               checked={isSelected}
                               onChange={() => {}} // Handled by div onClick
-                              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                              className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                             />
                             <div className="ml-3">
-                              <h4 className="text-sm font-medium text-gray-900">{channel.name}</h4>
-                              <p className="text-xs text-gray-500">{channel.description}</p>
+                              <h4 className="text-sm font-medium text-foreground">{channel.name}</h4>
+                              <p className="text-xs text-muted-foreground">{channel.description}</p>
                             </div>
                           </div>
                         </div>
                       );
                     })}
                   </div>
-                  {errors.channels && <p className="mt-2 text-sm text-red-600">{errors.channels}</p>}
+                  {errors.channels && <p className="mt-2 text-sm text-destructive">{errors.channels}</p>}
                 </div>
 
                 {/* Budget allocation for selected channels */}
                 {formData.channels.length > 0 && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-4">
+                    <label className="block text-sm font-medium text-foreground mb-4">
                       Budget Allocation per Channel
                     </label>
                     <div className="space-y-4">
                       {formData.channels.map((channel) => (
-                        <div key={channel.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg">
+                        <div key={channel.id} className="flex items-center space-x-4 p-4 border border-border rounded-lg">
                           <div className="flex-1">
-                            <span className="text-sm font-medium text-gray-900">{channel.name}</span>
+                            <span className="text-sm font-medium text-foreground">{channel.name}</span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <span className="text-sm text-gray-500">$</span>
+                            <span className="text-sm text-muted-foreground">$</span>
                             <input
                               type="number"
                               value={channel.budget}
                               onChange={(e) => handleChannelBudgetChange(channel.id, parseFloat(e.target.value) || 0)}
-                              className="w-24 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              className="w-24 px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-card text-card-foreground"
                               placeholder="0"
                               min="0"
                               step="100"
@@ -542,7 +546,7 @@ export default function NewCampaignPage() {
                           </div>
                         </div>
                       ))}
-                      <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
+                      <div className="text-sm text-muted-foreground bg-card p-3 rounded-lg">
                         <strong>Total Channel Budget: </strong>
                         ${formData.channels.reduce((sum, channel) => sum + channel.budget, 0).toLocaleString()}
                         {formData.overallBudget > 0 && (
@@ -562,15 +566,15 @@ export default function NewCampaignPage() {
           {currentStep === 4 && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-gray-900">Messaging & Content Pillars</h2>
-                <div className="text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                <h2 className="text-xl font-semibold text-foreground">Messaging & Content Pillars</h2>
+                <div className="text-sm text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
                   💡 Consistent messaging is crucial
                 </div>
               </div>
               
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="messaging.coreMessage" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="messaging.coreMessage" className="block text-sm font-medium text-foreground mb-2">
                     Core Campaign Message *
                   </label>
                   <textarea
@@ -579,16 +583,16 @@ export default function NewCampaignPage() {
                     value={formData.messaging.coreMessage}
                     onChange={handleInputChange}
                     rows={3}
-                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      errors['messaging.coreMessage'] ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors['messaging.coreMessage'] ? 'border-destructive' : 'border-border'
                     }`}
                     placeholder="Main message you want to communicate to your audience..."
                   />
-                  {errors['messaging.coreMessage'] && <p className="mt-1 text-sm text-red-600">{errors['messaging.coreMessage']}</p>}
+                  {errors['messaging.coreMessage'] && <p className="mt-1 text-sm text-destructive">{errors['messaging.coreMessage']}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Key Value Propositions (Max 3) *
                   </label>
                   <div className="space-y-3">
@@ -598,14 +602,16 @@ export default function NewCampaignPage() {
                           type="text"
                           value={prop}
                           onChange={(e) => handleValuePropChange(index, e.target.value)}
-                          className="flex-1 px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                          className={`flex-1 px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                            errors[`messaging.valueProps.${index}`] ? 'border-destructive' : 'border-border'
+                          }`}
                           placeholder={`Value proposition ${index + 1}`}
                         />
                         {formData.messaging.valueProps.length > 1 && (
                           <button
                             type="button"
                             onClick={() => removeValueProp(index)}
-                            className="p-2 text-red-600 hover:text-red-800 transition-colors"
+                            className="p-2 text-destructive hover:text-destructive-foreground transition-colors"
                             title="Remove value proposition"
                           >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -619,7 +625,7 @@ export default function NewCampaignPage() {
                       <button
                         type="button"
                         onClick={addValueProp}
-                        className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
+                        className="flex items-center space-x-2 text-primary hover:text-primary-foreground transition-colors"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -628,11 +634,11 @@ export default function NewCampaignPage() {
                       </button>
                     )}
                   </div>
-                  {errors['messaging.valueProps'] && <p className="mt-1 text-sm text-red-600">{errors['messaging.valueProps']}</p>}
+                  {errors['messaging.valueProps'] && <p className="mt-1 text-sm text-destructive">{errors['messaging.valueProps']}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="messaging.contentIdeas" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="messaging.contentIdeas" className="block text-sm font-medium text-foreground mb-2">
                     Content Ideas/Themes
                   </label>
                   <textarea
@@ -641,7 +647,9 @@ export default function NewCampaignPage() {
                     value={formData.messaging.contentIdeas}
                     onChange={handleInputChange}
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-card text-card-foreground ${
+                      errors['messaging.contentIdeas'] ? 'border-destructive' : 'border-border'
+                    }`}
                     placeholder="Blog posts, social media content, videos, infographics, case studies..."
                   />
                 </div>
@@ -651,14 +659,14 @@ export default function NewCampaignPage() {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+        <div className="flex justify-between items-center pt-6 border-t border-border">
           <button
             onClick={handlePrevStep}
             disabled={currentStep === 1}
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               currentStep === 1
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-600 text-white hover:bg-gray-700'
+                ? 'bg-muted text-muted-foreground cursor-not-allowed'
+                : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
             }`}
           >
             Previous
@@ -668,7 +676,7 @@ export default function NewCampaignPage() {
             {currentStep < 4 ? (
               <button
                 onClick={handleNextStep}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                className="btn-primary px-6 py-3 rounded-lg font-medium transition-colors"
               >
                 Next
               </button>
@@ -678,8 +686,8 @@ export default function NewCampaignPage() {
                 disabled={isSubmitting}
                 className={`px-6 py-3 rounded-lg font-medium transition-colors ${
                   isSubmitting
-                    ? 'bg-gray-400 text-white cursor-not-allowed'
-                    : 'bg-green-600 text-white hover:bg-green-700'
+                    ? 'bg-muted text-muted-foreground cursor-not-allowed'
+                    : 'bg-success text-white hover:bg-success/90'
                 }`}
               >
                 {isSubmitting ? 'Saving...' : 'Save Campaign'}
