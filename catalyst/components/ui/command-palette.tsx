@@ -4,11 +4,6 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { 
   MagnifyingGlassIcon,
-  PlusIcon,
-  ChartBarIcon,
-  Cog6ToothIcon,
-  DocumentTextIcon,
-  UserIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'motion/react';
@@ -169,7 +164,7 @@ export default function CommandPalette({ isOpen, onClose, commands }: CommandPal
                   <div className="px-6 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-gray-800">
                     {categoryLabels[category as keyof typeof categoryLabels]}
                   </div>
-                  {categoryCommands.map((command, index) => {
+                  {categoryCommands.map((command) => {
                     const globalIndex = filteredCommands.indexOf(command);
                     const isSelected = globalIndex === selectedIndex;
                     
@@ -213,7 +208,7 @@ export default function CommandPalette({ isOpen, onClose, commands }: CommandPal
               
               {filteredCommands.length === 0 && (
                 <div className="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
-                  No commands found for "{query}"
+                  No commands found for &quot;{query}&quot;
                 </div>
               )}
             </div>

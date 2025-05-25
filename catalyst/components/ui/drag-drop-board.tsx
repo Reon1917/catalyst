@@ -67,8 +67,7 @@ const createDefaultColumns = (campaigns: Campaign[]): Column[] => {
 
 export default function DragDropBoard({ 
   initialColumns, 
-  onCampaignMove = () => {}, 
-  onCampaignUpdate = () => {} 
+  onCampaignMove = () => {} 
 }: Partial<DragDropBoardProps>) {
   // Generate mock campaigns and create columns
   const mockCampaigns = useMemo(() => generateMockCampaigns(), []);
@@ -100,7 +99,7 @@ export default function DragDropBoard({
     setDraggedOver(columnId);
   }, []);
 
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
+  const handleDragLeave = useCallback(() => {
     dragCounter.current--;
     if (dragCounter.current === 0) {
       setDraggedOver(null);
