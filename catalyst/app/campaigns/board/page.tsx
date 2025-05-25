@@ -19,7 +19,9 @@ export default function CampaignBoardPage() {
   const handleSearch = (query: string, filters: any) => {
     setSearchQuery(query);
     setFilters(filters);
-    console.log('Search:', query, 'Filters:', filters);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Search:', query, 'Filters:', filters);
+    }
   };
 
   const handleCampaignMove = (campaignId: string, fromColumn: string, toColumn: string) => {
