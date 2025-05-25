@@ -8,36 +8,40 @@ import ThemeSwitcher from './ThemeSwitcher';
 
 export default function Navbar() {
   return (
-    <nav className="bg-background/80 backdrop-blur-xl border-b border-border/50 sticky top-0 z-50">
+    <nav className="bg-background/95 backdrop-blur-xl border-b border-border/30 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Brand */}
           <div className="flex items-center">
             <Link 
               href="/" 
-              className="text-xl font-semibold text-foreground hover:text-primary transition-colors duration-200"
+              className="text-xl font-bold text-foreground hover:text-primary transition-all duration-300 hover:scale-105"
             >
-              Catalyst
+              <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                Catalyst
+              </span>
             </Link>
           </div>
 
           {/* Navigation Links */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4">
             <Link 
               href="/dashboard" 
-              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-accent/50"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-accent/60 hover:shadow-sm"
             >
               Dashboard
             </Link>
             <Link 
               href="/campaigns/new" 
-              className="btn-primary text-sm"
+              className="btn-primary text-sm font-medium px-5 py-2.5 hover:shadow-lg transition-all duration-200"
             >
-              New Campaign
+              + New Campaign
             </Link>
             
             {/* Theme Switcher */}
-            <ThemeSwitcher />
+            <div className="ml-2">
+              <ThemeSwitcher />
+            </div>
           </div>
         </div>
       </div>
