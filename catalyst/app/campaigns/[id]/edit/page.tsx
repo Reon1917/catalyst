@@ -7,20 +7,10 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { CampaignInput, CampaignChannel } from '@/lib/schemas';
+import { CampaignInput } from '@/lib/schemas';
 import { getCampaignById, saveCampaign } from '@/lib/data';
 
-// Available marketing channels
-const AVAILABLE_CHANNELS = [
-  { id: 'socialMedia', name: 'Social Media', description: 'Facebook, Instagram, Twitter, LinkedIn' },
-  { id: 'email', name: 'Email Marketing', description: 'Newsletter, drip campaigns, automation' },
-  { id: 'seo', name: 'SEO', description: 'Search engine optimization' },
-  { id: 'ppc', name: 'PPC Advertising', description: 'Google Ads, Bing Ads' },
-  { id: 'contentMarketing', name: 'Content Marketing', description: 'Blog posts, videos, infographics' },
-  { id: 'influencer', name: 'Influencer Marketing', description: 'Partnerships with influencers' },
-  { id: 'pr', name: 'Public Relations', description: 'Press releases, media outreach' },
-  { id: 'events', name: 'Events & Webinars', description: 'Virtual and in-person events' }
-];
+
 
 export default function EditCampaignPage() {
   const params = useParams();
@@ -116,73 +106,7 @@ export default function EditCampaignPage() {
     }
   };
 
-  // Handle channel selection
-  const handleChannelToggle = (channelId: string, channelName: string) => {
-    setFormData(prev => {
-      const existingChannelIndex = prev.channels.findIndex(c => c.id === channelId);
-      
-      if (existingChannelIndex >= 0) {
-        // Remove channel
-        return {
-          ...prev,
-          channels: prev.channels.filter(c => c.id !== channelId)
-        };
-      } else {
-        // Add channel
-        return {
-          ...prev,
-          channels: [...prev.channels, { id: channelId, name: channelName, budget: 0 }]
-        };
-      }
-    });
-  };
 
-  // Handle channel budget change
-  const handleChannelBudgetChange = (channelId: string, budget: number) => {
-    setFormData(prev => ({
-      ...prev,
-      channels: prev.channels.map(channel =>
-        channel.id === channelId ? { ...channel, budget } : channel
-      )
-    }));
-  };
-
-  // Handle value proposition changes
-  const handleValuePropChange = (index: number, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      messaging: {
-        ...prev.messaging,
-        valueProps: prev.messaging.valueProps.map((prop, i) => i === index ? value : prop)
-      }
-    }));
-  };
-
-  // Add new value proposition
-  const addValueProp = () => {
-    if (formData.messaging.valueProps.length < 3) {
-      setFormData(prev => ({
-        ...prev,
-        messaging: {
-          ...prev.messaging,
-          valueProps: [...prev.messaging.valueProps, '']
-        }
-      }));
-    }
-  };
-
-  // Remove value proposition
-  const removeValueProp = (index: number) => {
-    if (formData.messaging.valueProps.length > 1) {
-      setFormData(prev => ({
-        ...prev,
-        messaging: {
-          ...prev.messaging,
-          valueProps: prev.messaging.valueProps.filter((_, i) => i !== index)
-        }
-      }));
-    }
-  };
 
   // Validation function
   const validateStep = (step: number): boolean => {
@@ -293,7 +217,7 @@ export default function EditCampaignPage() {
           <h1 className="text-3xl font-bold text-gray-900">Campaign Not Found</h1>
         </div>
         <div className="bg-white rounded-lg shadow p-6 text-center">
-          <p className="text-gray-600 mb-4">The campaign you're trying to edit doesn't exist.</p>
+          <p className="text-gray-600 mb-4">The campaign you&apos;re trying to edit doesn&apos;t exist.</p>
           <button
             onClick={() => router.push('/dashboard')}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"

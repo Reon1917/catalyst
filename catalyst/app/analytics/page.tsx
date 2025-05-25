@@ -20,14 +20,11 @@ import {
   ChartBarIcon,
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
-  EyeIcon,
   CursorArrowRaysIcon,
   CurrencyDollarIcon,
   UsersIcon,
   GlobeAltIcon,
-  DevicePhoneMobileIcon,
-  ComputerDesktopIcon,
-  CalendarIcon
+  DevicePhoneMobileIcon
 } from '@heroicons/react/24/outline';
 import { generateCampaigns, generateAnalyticsData } from '@/lib/mock-data';
 
@@ -242,7 +239,7 @@ export default function AnalyticsPage() {
         >
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Collavo Analytics</h1>
-            <p className="text-gray-600 dark:text-gray-400">Monitor your productivity app's growth and user acquisition</p>
+            <p className="text-gray-600 dark:text-gray-400">Monitor your productivity app&apos;s growth and user acquisition</p>
           </div>
           
           <div className="flex items-center space-x-2">

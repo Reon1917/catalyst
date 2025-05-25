@@ -7,18 +7,12 @@ import AdvancedSearch from '@/components/ui/advanced-search';
 import {
   ViewColumnsIcon,
   Squares2X2Icon,
-  AdjustmentsHorizontalIcon,
   PlusIcon
 } from '@heroicons/react/24/outline';
 
 export default function CampaignBoardPage() {
   const [viewMode, setViewMode] = useState<'board' | 'grid'>('board');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filters, setFilters] = useState({});
-
-  const handleSearch = (query: string, filters: any) => {
-    setSearchQuery(query);
-    setFilters(filters);
+  const handleSearch = (query: string, filters: Record<string, unknown>) => {
     if (process.env.NODE_ENV === 'development') {
       console.log('Search:', query, 'Filters:', filters);
     }
@@ -29,7 +23,7 @@ export default function CampaignBoardPage() {
     // Here you would typically update your backend/state management
   };
 
-  const handleCampaignUpdate = (campaign: any) => {
+  const handleCampaignUpdate = (campaign: Record<string, unknown>) => {
     console.log('Updated campaign:', campaign);
     // Here you would typically update your backend/state management
   };

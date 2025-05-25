@@ -10,7 +10,7 @@ export default function NewCampaignPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (formData: any) => {
+  const handleSubmit = async (formData: Record<string, unknown>) => {
     setIsLoading(true);
     
     // Simulate API call

@@ -77,7 +77,7 @@ export default function CampaignDetailPage() {
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-foreground mb-2">Campaign not found</h3>
-            <p className="text-muted-foreground mb-6">The campaign you're looking for doesn't exist or may have been deleted.</p>
+            <p className="text-muted-foreground mb-6">The campaign you&apos;re looking for doesn&apos;t exist or may have been deleted.</p>
             <Link 
               href="/dashboard"
               className="btn-primary inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition-all"
