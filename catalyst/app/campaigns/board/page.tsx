@@ -10,9 +10,17 @@ import {
   PlusIcon
 } from '@heroicons/react/24/outline';
 
+interface SearchFilters {
+  status: string[];
+  budget: { min: number; max: number };
+  dateRange: { start: string; end: string };
+  channels: string[];
+  tags: string[];
+}
+
 export default function CampaignBoardPage() {
   const [viewMode, setViewMode] = useState<'board' | 'grid'>('board');
-  const handleSearch = (query: string, filters: Record<string, unknown>) => {
+  const handleSearch = (query: string, filters: SearchFilters) => {
     if (process.env.NODE_ENV === 'development') {
       console.log('Search:', query, 'Filters:', filters);
     }
